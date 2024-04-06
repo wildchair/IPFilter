@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "IPFilter": {
+      "commandName": "Project",
+      "commandLineArgs": "--file-log log.txt --file-output result.txt --address-start 195.127.01.32 --address-mask 255.255.255.255 --time-start 11.03.2023 --time-end 11.03.2024 --save-conf true"
+    }
+  }
+}
