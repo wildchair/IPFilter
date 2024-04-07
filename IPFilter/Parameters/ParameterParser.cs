@@ -27,7 +27,6 @@ namespace IPFilter.Parameters
             {
                 parameters = null;
             }
-            bool _save = false;
 
             if (parameters == null)
                 parameters = new Parameter();
