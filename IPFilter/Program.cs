@@ -85,9 +85,14 @@ namespace IPFilter
             var res = table.Where(x => x.Item2 <= parameters.EndTime && x.Item2 >= parameters.StartTime &&
                                        x.Item1.Address <= parameters.AddressMask.Address && 
                                        x.Item1.Address >= parameters.AddressStart.Address ).GroupBy(x => x.Item1);
-            foreach (var row in res)
+
+            using(var stream = new StreamWriter(parameters.OutputPath))
             {
-                Console.WriteLine($"{row.Key} {row.Count()}");
+                foreach (var row in res)
+                {
+                    Console.WriteLine($"{row.Key} {row.Count()}");
+                    stream.WriteLine($"{row.Key} {row.Count()}");
+                }
             }
         }
     }
