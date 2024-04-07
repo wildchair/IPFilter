@@ -15,7 +15,7 @@ namespace IPFilter
             {
                 if (args.Length == 0)
                 {
-                    Console.WriteLine("Аргументы будут загружены из файла конфигурации.");
+                    Console.WriteLine("Аргументы будут полностью загружены из файла конфигурации при его наличии.");
                     parameters = ParameterParser.ParseFromXml();
                 }
                 else
@@ -25,7 +25,6 @@ namespace IPFilter
             }
             catch (Exception ex)
             {
-
                 //считаю, что программа должна работать как классическая консольная утилита и
                 //завершать работу при получении невалидных параметров
                 Console.WriteLine($"Ошибка: {ex.Message}");
@@ -35,18 +34,14 @@ namespace IPFilter
             var type = typeof(Parameter);
             var fields = type.GetProperties();
             foreach (var field in fields)
-            {
                 if (field.GetValue(parameters) == null)
                 {
                     Console.WriteLine($"Ошибка: не введен параметр {field}");
                     return;
                 }
-            }
 
             if (parameters.NeedSave)
-            {
                 parameters.SaveConfig();
-            }
 
             string log;
             try
@@ -83,10 +78,10 @@ namespace IPFilter
             }
 
             var res = table.Where(x => x.Item2 <= parameters.EndTime && x.Item2 >= parameters.StartTime &&
-                                       x.Item1.Address <= parameters.AddressMask.Address && 
-                                       x.Item1.Address >= parameters.AddressStart.Address ).GroupBy(x => x.Item1);
+                                       x.Item1.Address <= parameters.AddressMask.Address &&
+                                       x.Item1.Address >= parameters.AddressStart.Address).GroupBy(x => x.Item1);
 
-            using(var stream = new StreamWriter(parameters.OutputPath))
+            using (var stream = new StreamWriter(parameters.OutputPath))
             {
                 foreach (var row in res)
                 {

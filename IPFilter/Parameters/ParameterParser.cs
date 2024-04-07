@@ -87,6 +87,5 @@ namespace IPFilter.Parameters
 
             return parameters;
         }
-
     }
 }
